@@ -1,0 +1,24 @@
+name: bx-calib
+on:
+  workflow_dispatch:
+    inputs:
+      n_fire:
+        description: 'number of tip fires'
+        default: '1'
+jobs:
+  calib:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: deps
+        run: pip install solders base58 requests pycryptodome
+      - name: calib
+        env:
+          WALLET_B58: ${{ secrets.WALLET_B58 }}
+          BX_AUTH: ${{ secrets.BX_AUTH }}
+          N_FIRE: ${{ inputs.n_fire }}
+        run: python calib_action.py
