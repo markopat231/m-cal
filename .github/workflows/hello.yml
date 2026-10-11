@@ -1,0 +1,8 @@
+name: hello
+on:
+  workflow_dispatch:
+jobs:
+  hi:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "HELLO FROM US RUNNER"; curl -s ipinfo.io | head -5
